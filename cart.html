@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Shopping Cart - E-Commerce App</title>
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+    <ul>
+        {% for product in cart %}
+            <li>
+                {{ product['name'] }} - ${{ product['price'] }}
+                <form action="{{ url_for('remove_from_cart', product_id=product['id']) }}" method="post">
+                    <input type="submit" value="Remove from Cart">
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <p>Total: ${{ sum(product['price'] for product in cart) }}</p>
+    <form action="{{ url_for('clear_cart') }}" method="post">
+        <input type="submit" value="Clear Cart">
+    </form>
+    <a href="{{ url_for('index') }}">Back to Product List</a>
+</body>
+</html>
